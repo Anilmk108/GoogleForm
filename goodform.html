@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gUP - SE CSAT Form</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Google Forms-like background for body */
+body {
+    background: linear-gradient(135deg, #f0f2f5 0%, #e8eaed 100%);
+}
+
+/* Form container: more padding, rounded corners, shadow */
+.form-container {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px 0 rgba(60,64,67,.18), 0 1.5px 6px 0 rgba(60,64,67,.12);
+    padding: 40px 32px;
+    max-width: 700px;
+    margin: 40px auto;
+    gap: 32px;
+}
+
+/* Section headers */
+.form-container h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #202124;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+}
+
+.form-container p {
+    color: #5f6368;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+/* Input text, email, and textarea styling */
+input[type="text"], input[type="email"], textarea {
+    background: #f8fafc;
+    border-radius: 6px;
+    border: 1px solid #dadce0;
+    padding: 12px 14px;
+    font-size: 1.08rem;
+    margin-top: 6px;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+}
+input[type="text"]::placeholder, input[type="email"]::placeholder, textarea::placeholder {
+    color: #5f6368; /* Gray for placeholder text */
+    font-weight: 400; /* Normal weight for placeholder */
+}
+input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+    border-color: #1a73e8;
+    background: #fff;
+}
+
+/* Checkbox and radio styling */
+input[type="checkbox"], input[type="radio"] {
+    accent-color: #1a73e8;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+label {
+    font-size: 1rem;
+    color: #3c4043;
+    font-weight: 500;
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+
+/* Rating options - make them look like Google Forms */
+.rating-options {
+    display: flex;
+    flex-direction: row;
+    gap: 24px; /* More space between options */
+    margin-top: 12px;
+    margin-bottom: 12px;
+    justify-content: flex-start;
+}
+
+.rating-option label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 16px 12px;
+    min-width: 80px;
+    box-shadow: 0 1px 4px rgba(60,64,67,.08);
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    border: 2px solid transparent;
+}
+
+.rating-option label:hover, .rating-option input[type="radio"]:focus + span {
+    background: #e3f0fd;
+    box-shadow: 0 2px 8px rgba(60,64,67,.12);
+    border-color: #1a73e8;
+}
+
+.rating-option input[type="radio"]:checked + span {
+    color: #1a73e8;
+    font-weight: 700;
+}
+
+.rating-option input[type="radio"] {
+    margin-bottom: 6px;
+}
+
+/* Error messages */
+.error-message {
+    color: #d93025;
+    font-size: 0.95rem;
+    margin-top: 2px;
+    margin-bottom: 0;
+    padding-left: 2px;
+}
+
+/* Required star */
+.required-star {
+    color: #d93025;
+    font-size: 1.1em;
+    margin-left: 2px;
+}
+
+/* Button styling */
+button, .confirmation-container a.button {
+    background: linear-gradient(90deg, #1a73e8 80%, #4285f4 100%);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.08rem;
+    font-weight: 600;
+    padding: 12px 32px;
+    margin-top: 18px;
+    box-shadow: 0 2px 6px rgba(60,64,67,.12);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+button:hover, .confirmation-container a.button:hover {
+    background: #1765c1;
+    box-shadow: 0 4px 12px rgba(60,64,67,.18);
+}
+
+/* Confirmation message */
+.confirmation-container {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px 0 rgba(60,64,67,.18), 0 1.5px 6px 0 rgba(60,64,67,.12);
+    padding: 48px 32px;
+    max-width: 500px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.confirmation-container h2 {
+    font-size: 2rem;
+    color: #202124;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.confirmation-container p {
+    color: #5f6368;
+    font-size: 1.08rem;
+    margin-bottom: 18px;
+}
+
+/* Conditional ratings group styling */
+.conditional-ratings-group {
+    padding: 32px !important; /* More padding for ratings sections */
+    background: #f8fafc;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(60,64,67,.08);
+}
+    </style>
+</head>
+<body>
+    <div id="formContent" class="form-container flex flex-col gap-8">
+        <!-- Overview Section -->
+        <h1 class="text-3xl font-bold text-gray-800 text-left">gUP - SE CSAT Form</h1>
+        <p class="text-sm text-gray-700 text-left mb-4">
+            This gUP - SE CSAT Form is a customer satisfaction survey designed to gather feedback on various training and support requests related to Google projects and deliverables.
+            You'll rate your satisfaction on a 1-5 scale (Very Poor to Excellent) for three key areas:
+            <span class="font-semibold">Quality of the final solution/deliverables</span>,
+            <span class="font-semibold">Timeliness of delivery</span>, and
+            <span class="font-semibold">Overall project performance</span>.
+        </p>
+        <div class="mb-4 text-left">
+            <p class="font-semibold text-gray-700">Rating Scale:</p>
+            <ul class="text-sm text-gray-600 list-disc list-inside mt-1 pl-4">
+                <li>5 - Excellent</li>
+                <li>4 - Good</li>
+                <li>3 - Average</li>
+                <li>2 - Below Average</li>
+                <li>1 - Very Poor</li>
+            </ul>
+        </div>
+        <hr class="my-4 border-gray-200">
+
+        <div class="form-section-group flex flex-col gap-2 bg-gray-50 rounded-lg p-4">
+            <label for="projectNameId" class="radio-group-label">Please enter the Project Name / Project ID:<span class="required-star">*</span></label>
+            <p class="text-xs font-normal text-gray-500 mt-1">Example: "Pixel 8 Launch Training" or "PROJ-2025-00123"</p>
+            <input type="text" id="projectNameId" placeholder="Your answer" class="w-full">
+            <div id="projectNameIdError" class="error-message"></div>
+        </div>
+        
+        <div class="form-section-group flex flex-col gap-2 bg-gray-50 rounded-lg p-4">
+            <label class="radio-group-label">Your Email:<span class="required-star">*</span></label>
+            <input type="hidden" id="capturedEmail" value="<?= capturedEmail ?>">
+            <p id="displayEmail" class="text-base font-medium text-gray-800"><?= capturedEmail ?></p>
+            <div id="emailError" class="error-message"></div>
+        </div>
+
+        <div class="form-section-group flex flex-col gap-2 bg-gray-50 rounded-lg p-4">
+            <p class="radio-group-label" id="gupTeamLabel">gUP Team<span class="required-star">*</span></p>
+            <p class="text-sm text-gray-600 mb-2">Please select the appropriate team this survey applies to:</p>
+            <div class="gup-team-checkboxes flex flex-col gap-2">
+                <label class="flex items-center gap-2">
+                    <input type="checkbox" name="gupTeamOption" value="Instructional Designer">
+                    Instructional Designer
+                </label>
+                <label class="flex items-center gap-2">
+                    <input type="checkbox" name="gupTeamOption" value="LMS Admin">
+                    LMS Admin
+                </label>
+                <label class="flex items-center gap-2">
+                    <input type="checkbox" name="gupTeamOption" value="Global Trainer">
+                    Global Trainer
+                </label>
+            </div>
+            <div id="gupTeamError" class="error-message"></div>
+        </div>
+        <!-- End gUP Team Section -->
+
+        <!-- Conditional Options for Instructional Designer -->
+        <div id="instructionalDesignerOptions" class="checkbox-group hidden flex flex-col gap-2 bg-gray-50 rounded-lg p-4">
+            <p class="radio-group-label mb-3" id="idOptionsLabel">Instructional Designer:<span class="required-star">*</span></p>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="courseDesignOption" value="Course Design and Curriculum Development">
+                Course Design and Curriculum Development
+            </label>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="courseDesignOption" value="Facilitator-led (Instructor-led training materials/courses)">
+                Facilitator-led (Instructor-led training materials/courses)
+            </label>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="courseDesignOption" value="E-learning Modules/Courses (Interactive, self-paced online courses created within Evolve)">
+                E-learning Modules/Courses (Interactive, self-paced online courses created within Evolve)
+            </label>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="courseDesignOption" value="Self-Guided Deck (Independent learning modules or resources)">
+                Self-Guided Deck (Independent learning modules or resources)
+            </label>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="courseDesignOption" value="Assessment (Evaluation of knowledge/skills)">
+                Assessment (Evaluation of knowledge/skills)
+            </label>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="courseDesignOption" value="Partner Deck (Instructor-led training materials/courses for third party vendors)">
+                Partner Deck (Instructor-led training materials/courses for third party vendors)
+            </label>
+            <div class="other-text-area flex flex-col gap-1">
+                <label for="otherCourseDesign">Other (please specify):</label>
+                <textarea id="otherCourseDesign" rows="2" placeholder="Write anything..." class="w-full"></textarea>
+            </div>
+            <div id="idOptionsError" class="error-message"></div>
+        </div>
+        <!-- End Conditional Options for Instructional Designer -->
+
+        <!-- Ratings for Instructional Designer -->
+        <div id="idRatingsSection" class="conditional-ratings-group hidden flex flex-col gap-4 bg-gray-50 rounded-lg p-4">
+            <p class="radio-group-label" id="idRatingsLabel">Ratings for Instructional Designer:</p>
+            <!-- Quality Satisfaction Rating -->
+            <div class="form-section-group flex flex-col gap-2">
+                <p class="radio-group-label" id="idQualityLabel">How satisfied are you with the quality of the end solution/deliverables (Instructional Designer)?<span class="required-star">*</span></p>
+                <div class="rating-options flex flex-row gap-4">
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idSatisfactionRating" value="1">
+                            <span>1</span>
+                            <span class="text-xs text-gray-500">Very Poor</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idSatisfactionRating" value="2">
+                            <span>2</span>
+                            <span class="text-xs text-gray-500">Below Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idSatisfactionRating" value="3">
+                            <span>3</span>
+                            <span class="text-xs text-gray-500">Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idSatisfactionRating" value="4">
+                            <span>4</span>
+                            <span class="text-xs text-gray-500">Good</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idSatisfactionRating" value="5">
+                            <span>5</span>
+                            <span class="text-xs text-gray-500">Excellent</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="idSatisfactionError" class="error-message"></div>
+            </div>
+            <!-- Timing of Delivery Rating -->
+            <div class="form-section-group">
+                <p class="radio-group-label" id="idTimingLabel">How would you rate the timing of delivery (Instructional Designer)?<span class="required-star">*</span></p>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idTimingRating" value="1">
+                            <span>1</span>
+                            <span class="text-xs text-gray-500">Very Poor</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idTimingRating" value="2">
+                            <span>2</span>
+                            <span class="text-xs text-gray-500">Below Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idTimingRating" value="3">
+                            <span>3</span>
+                            <span class="text-xs text-gray-500">Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idTimingRating" value="4">
+                            <span>4</span>
+                            <span class="text-xs text-gray-500">Good</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idTimingRating" value="5">
+                            <span>5</span>
+                            <span class="text-xs text-gray-500">Excellent</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="idTimingError" class="error-message"></div>
+            </div>
+            <!-- Overall Performance Rating -->
+            <div class="form-section-group">
+                <p class="radio-group-label" id="idOverallLabel">How satisfied are you with the overall deliverable and performance (Instructional Designer)?<span class="required-star">*</span></p>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idOverallPerformanceRating" value="1">
+                            <span>1</span>
+                            <span class="text-xs text-gray-500">Very Poor</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idOverallPerformanceRating" value="2">
+                            <span>2</span>
+                            <span class="text-xs text-gray-500">Below Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idOverallPerformanceRating" value="3">
+                            <span>3</span>
+                            <span class="text-xs text-gray-500">Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idOverallPerformanceRating" value="4">
+                            <span>4</span>
+                            <span class="text-xs text-gray-500">Good</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="idOverallPerformanceRating" value="5">
+                            <span>5</span>
+                            <span class="text-xs text-gray-500">Excellent</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="idOverallError" class="error-message"></div>
+            </div>
+        </div>
+        <!-- End Ratings for Instructional Designer -->
+ 
+ 
+        <!-- Conditional Options for LMS Admin -->
+        <div id="lmsAdminOptionsDiv" class="checkbox-group hidden flex flex-col gap-2 bg-gray-50 rounded-lg p-4">
+            <p class="radio-group-label mb-3" id="lmsOptionsLabel">LMS Admin:<span class="required-star">*</span></p>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="lmsAdminOption" value="LMS Support">
+                LMS Support
+            </label>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="lmsAdminOption" value="Intellum and Connect Training (Training upload, batch creation, course registration)">
+                Intellum and Connect Training (Training upload, batch creation, course registration)
+            </label>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="lmsAdminOption" value="LMS Report (Generating data and analytics from the Learning Management System)">
+                LMS Report (Generating data and analytics from the Learning Management System)
+            </label>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="lmsAdminOption" value="Buganizer LMS Tickets (Managing and resolving issues/bugs within the Learning Management System)">
+                Buganizer LMS Tickets (Managing and resolving issues/bugs within the Learning Management System)
+            </label>
+            <div class="other-text-area flex flex-col gap-1">
+                <label for="otherLMSAdmin">Other (please specify):</label>
+                <textarea id="otherLMSAdmin" rows="2" placeholder="Write anything..." class="w-full"></textarea>
+            </div>
+            <div id="lmsOptionsError" class="error-message"></div>
+        </div>
+        <!-- End Conditional Options for LMS Admin -->
+ 
+     <!-- Ratings for LMS Admin -->
+        <div id="lmsAdminRatingsSection" class="conditional-ratings-group hidden flex flex-col gap-4 bg-gray-50 rounded-lg p-4">
+            <p class="radio-group-label" id="lmsRatingsLabel">Ratings for LMS Admin:</p>
+            <!-- Quality Satisfaction Rating -->
+            <div class="form-section-group flex flex-col gap-2">
+                <p class="radio-group-label" id="lmsQualityLabel">How satisfied are you with the quality of the end solution/deliverables (LMS Admin)?<span class="required-star">*</span></p>
+                <div class="rating-options flex flex-row gap-4">
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsSatisfactionRating" value="1">
+                            <span>1</span>
+                            <span class="text-xs text-gray-500">Very Poor</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsSatisfactionRating" value="2">
+                            <span>2</span>
+                            <span class="text-xs text-gray-500">Below Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsSatisfactionRating" value="3">
+                            <span>3</span>
+                            <span class="text-xs text-gray-500">Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsSatisfactionRating" value="4">
+                            <span>4</span>
+                            <span class="text-xs text-gray-500">Good</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsSatisfactionRating" value="5">
+                            <span>5</span>
+                            <span class="text-xs text-gray-500">Excellent</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="lmsSatisfactionError" class="error-message"></div>
+            </div>
+            <!-- Timing of Delivery Rating -->
+            <div class="form-section-group">
+                <p class="radio-group-label" id="lmsTimingLabel">How would you rate the timing of delivery (LMS Admin)?<span class="required-star">*</span></p>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsTimingRating" value="1">
+                            <span>1</span>
+                            <span class="text-xs text-gray-500">Very Poor</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsTimingRating" value="2">
+                            <span>2</span>
+                            <span class="text-xs text-gray-500">Below Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsTimingRating" value="3">
+                            <span>3</span>
+                            <span class="text-xs text-gray-500">Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsTimingRating" value="4">
+                            <span>4</span>
+                            <span class="text-xs text-gray-500">Good</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsTimingRating" value="5">
+                            <span>5</span>
+                            <span class="text-xs text-gray-500">Excellent</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="lmsTimingError" class="error-message"></div>
+            </div>
+            <!-- Overall Performance Rating -->
+            <div class="form-section-group">
+                <p class="radio-group-label" id="lmsOverallLabel">How satisfied are you with the overall deliverable and performance (LMS Admin)?<span class="required-star">*</span></p>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsOverallPerformanceRating" value="1">
+                            <span>1</span>
+                            <span class="text-xs text-gray-500">Very Poor</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsOverallPerformanceRating" value="2">
+                            <span>2</span>
+                            <span class="text-xs text-gray-500">Below Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsOverallPerformanceRating" value="3">
+                            <span>3</span>
+                            <span class="text-xs text-gray-500">Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsOverallPerformanceRating" value="4">
+                            <span>4</span>
+                            <span class="text-xs text-gray-500">Good</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="lmsOverallPerformanceRating" value="5">
+                            <span>5</span>
+                            <span class="text-xs text-gray-500">Excellent</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="lmsOverallError" class="error-message"></div>
+            </div>
+        </div>
+        <!-- End Ratings for LMS Admin -->
+ 
+        <!-- Conditional Options for Global Trainer -->
+        <div id="globalTrainerOptionsDiv" class="checkbox-group hidden flex flex-col gap-2 bg-gray-50 rounded-lg p-4">
+            <p class="radio-group-label mb-3" id="globalOptionsLabel">Global Trainer:<span class="required-star">*</span></p>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="globalTrainerOption" value="Training Delivery">
+                Training Delivery
+            </label>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="globalTrainerOption" value="TTT (Train the Trainer) (Facilitate session with Vendor Trainers on a specific training course)">
+                TTT (Train the Trainer) (Facilitate session with Vendor Trainers on a specific training course)
+            </label>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="globalTrainerOption" value="Training Audit (Review of existing training materials and courses)">
+                Training Audit (Review of existing training materials and courses)
+            </label>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="globalTrainerOption" value="Template/SOP Creation (Development of standardized documents and procedures for training)">
+                Template/SOP Creation (Development of standardized documents and procedures for training)
+            </label>
+            <div class="other-text-area flex flex-col gap-1">
+                <label for="otherGlobalTrainer">Other (please specify):</label>
+                <textarea id="otherGlobalTrainer" rows="2" placeholder="Write anything..." class="w-full"></textarea>
+            </div>
+            <div id="globalOptionsError" class="error-message"></div>
+        </div>
+        <!-- End Conditional Options for Global Trainer -->
+ 
+        <!-- Ratings for Global Trainer -->
+        <div id="globalTrainerRatingsSection" class="conditional-ratings-group hidden flex flex-col gap-4 bg-gray-50 rounded-lg p-4">
+            <p class="radio-group-label" id="globalRatingsLabel">Ratings for Global Trainer:</p>
+            <!-- Quality Satisfaction Rating -->
+            <div class="form-section-group flex flex-col gap-2">
+                <p class="radio-group-label" id="globalQualityLabel">How satisfied are you with the quality of the end solution/deliverables (Global Trainer)?<span class="required-star">*</span></p>
+                <div class="rating-options flex flex-row gap-4">
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalSatisfactionRating" value="1">
+                            <span>1</span>
+                            <span class="text-xs text-gray-500">Very Poor</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalSatisfactionRating" value="2">
+                            <span>2</span>
+                            <span class="text-xs text-gray-500">Below Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalSatisfactionRating" value="3">
+                            <span>3</span>
+                            <span class="text-xs text-gray-500">Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalSatisfactionRating" value="4">
+                            <span>4</span>
+                            <span class="text-xs text-gray-500">Good</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalSatisfactionRating" value="5">
+                            <span>5</span>
+                            <span class="text-xs text-gray-500">Excellent</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="globalSatisfactionError" class="error-message"></div>
+            </div>
+            <!-- Timing of Delivery Rating -->
+            <div class="form-section-group">
+                <p class="radio-group-label" id="globalTimingLabel">How would you rate the timing of delivery (Global Trainer)?<span class="required-star">*</span></p>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalTimingRating" value="1">
+                            <span>1</span>
+                            <span class="text-xs text-gray-500">Very Poor</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalTimingRating" value="2">
+                            <span>2</span>
+                            <span class="text-xs text-gray-500">Below Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalTimingRating" value="3">
+                            <span>3</span>
+                            <span class="text-xs text-gray-500">Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalTimingRating" value="4">
+                            <span>4</span>
+                            <span class="text-xs text-gray-500">Good</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalTimingRating" value="5">
+                            <span>5</span>
+                            <span class="text-xs text-gray-500">Excellent</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="globalTimingError" class="error-message"></div>
+            </div>
+            <!-- Overall Performance Rating -->
+            <div class="form-section-group">
+                <p class="radio-group-label" id="globalOverallLabel">How satisfied are you with the overall deliverable and performance (Global Trainer)?<span class="required-star">*</span></p>
+                <div class="rating-options">
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalOverallPerformanceRating" value="1">
+                            <span>1</span>
+                            <span class="text-xs text-gray-500">Very Poor</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalOverallPerformanceRating" value="2">
+                            <span>2</span>
+                            <span class="text-xs text-gray-500">Below Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalOverallPerformanceRating" value="3">
+                            <span>3</span>
+                            <span class="text-xs text-gray-500">Average</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalOverallPerformanceRating" value="4">
+                            <span>4</span>
+                            <span class="text-xs text-gray-500">Good</span>
+                        </label>
+                    </div>
+                    <div class="rating-option">
+                        <label>
+                            <input type="radio" name="globalOverallPerformanceRating" value="5">
+                            <span>5</span>
+                            <span class="text-xs text-gray-500">Excellent</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="globalOverallError" class="error-message"></div>
+            </div>
+        </div>
+        <!-- End Ratings for Global Trainer -->
+        
+        <!-- New Services Feedback Section -->
+        <div class="form-section-group text-left">
+            <p class="text-sm text-gray-700 mb-2">You can provide Kudos or detailed feedback on the project through  <span><a href="https://docs.google.com/forms/d/e/1FAIpQLSerwykDj3C_hHINqgRCj1swcUJMAh3-U5VTf-s4fld88U3Jxg/viewform?resourcekey=0-1zqP2dzMIhk-V7VApfKThQ" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-semibold underline">Services Feedback form</a> link.</span></p>
+            
+        </div>
+        <!-- End New Services Feedback Section -->
+ 
+        <button id="saveButton" class="mt-6 w-full py-3 text-lg font-bold">Submit <span id="saveLoading" class="loading-spinner hidden"></span></button>
+    </div>
+ 
+    <!-- Confirmation message container (hidden by default) -->
+    <div id="confirmationMessage" class="confirmation-container hidden">
+        <h2>Your response has been recorded.</h2>
+        <p>Thank you for completing the gUP - SE CSAT Form. Your feedback is important to us.</p>
+        <p>A summary of your submission has been sent to **<span id="confirmationEmailDisplay" class="font-bold"></span>**.</p>
+        <a href="javascript:void(0)" id="submitAnotherResponse" class="button">Submit another response</a>
+    </div>
+ 
+ <script>
+        // Use document.querySelector('#capturedEmail').value to get the email
+        const capturedEmailInput = document.getElementById('capturedEmail');
+        const projectNameIdInput = document.getElementById('projectNameId');
+        const gupTeamCheckboxes = document.querySelectorAll('input[name="gupTeamOption"]');
+        const saveButton = document.getElementById('saveButton');
+        const messageDisplay = document.getElementById('messageDisplay');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const saveLoadingSpinner = document.getElementById('saveLoading');
+ 
+        // Error message elements (IDs from HTML)
+        const projectNameIdError = document.getElementById('projectNameIdError');
+        const emailError = document.getElementById('emailError');
+        const gupTeamError = document.getElementById('gupTeamError'); // Error div for gUP team group
+        const gupTeamLabel = document.getElementById('gupTeamLabel'); // Label for gUP team group
+ 
+        // Elements for conditional display (Instructional Designer)
+        const instructionalDesignerOptionsDiv = document.getElementById('instructionalDesignerOptions');
+        const courseDesignCheckboxes = document.querySelectorAll('input[name="courseDesignOption"]');
+        const otherCourseDesignInput = document.getElementById('otherCourseDesign');
+        const idOptionsLabel = document.getElementById('idOptionsLabel'); // Label for ID options group
+        const idOptionsError = document.getElementById('idOptionsError'); // Error for ID options group
+ 
+        // Elements for LMS Admin conditional display
+        const lmsAdminOptionsDiv = document.getElementById('lmsAdminOptionsDiv');
+        const lmsAdminCheckboxes = document.querySelectorAll('input[name="lmsAdminOption"]');
+        const otherLMSAdminInput = document.getElementById('otherLMSAdmin');
+        const lmsOptionsLabel = document.getElementById('lmsOptionsLabel'); // Label for LMS options group
+        const lmsOptionsError = document.getElementById('lmsOptionsError'); // Error for LMS options group
+ 
+        // Elements for Global Trainer conditional display
+        const globalTrainerOptionsDiv = document.getElementById('globalTrainerOptionsDiv');
+        const globalTrainerCheckboxes = document.querySelectorAll('input[name="globalTrainerOption"]');
+        const otherGlobalTrainerInput = document.getElementById('otherGlobalTrainer');
+        const globalOptionsLabel = document.getElementById('globalOptionsLabel'); // Label for Global Trainer options group
+        const globalOptionsError = document.getElementById('globalOptionsError'); // Error for Global Trainer options group
+ 
+        // Elements for Conditional Ratings Groups for each team
+        const idRatingsSection = document.getElementById('idRatingsSection');
+        const idSatisfactionRatingRadios = document.querySelectorAll('input[name="idSatisfactionRating"]');
+        const idTimingRatingRadios = document.querySelectorAll('input[name="idTimingRating"]');
+        const idOverallPerformanceRatingRadios = document.querySelectorAll('input[name="idOverallPerformanceRating"]');
+        const idQualityLabel = document.getElementById('idQualityLabel'); // Labels for ID ratings
+        const idTimingLabel = document.getElementById('idTimingLabel');
+        const idOverallLabel = document.getElementById('idOverallLabel');
+        const idSatisfactionError = document.getElementById('idSatisfactionError'); // Errors for ID ratings
+        const idTimingError = document.getElementById('idTimingError');
+        const idOverallError = document.getElementById('idOverallError');
+ 
+ 
+        const lmsAdminRatingsSection = document.getElementById('lmsAdminRatingsSection');
+        const lmsSatisfactionRatingRadios = document.querySelectorAll('input[name="lmsSatisfactionRating"]');
+        const lmsTimingRatingRadios = document.querySelectorAll('input[name="lmsTimingRating"]');
+        const lmsOverallPerformanceRatingRadios = document.querySelectorAll('input[name="lmsOverallPerformanceRating"]');
+        const lmsQualityLabel = document.getElementById('lmsQualityLabel'); // Labels for LMS ratings
+        const lmsTimingLabel = document.getElementById('lmsTimingLabel');
+        const lmsOverallLabel = document.getElementById('lmsOverallLabel');
+        const lmsSatisfactionError = document.getElementById('lmsSatisfactionError'); // Errors for LMS ratings
+        const lmsTimingError = document.getElementById('lmsTimingError');
+        const lmsOverallError = document.getElementById('lmsOverallError');
+ 
+ 
+        const globalTrainerRatingsSection = document.getElementById('globalTrainerRatingsSection');
+        const globalSatisfactionRatingRadios = document.querySelectorAll('input[name="globalSatisfactionRating"]');
+        const globalTimingRatingRadios = document.querySelectorAll('input[name="globalTimingRating"]');
+        const globalOverallPerformanceRatingRadios = document.querySelectorAll('input[name="globalOverallPerformanceRating"]');
+        const globalQualityLabel = document.getElementById('globalQualityLabel'); // Labels for Global Trainer ratings
+        const globalTimingLabel = document.getElementById('globalTimingLabel');
+        const globalOverallLabel = document.getElementById('globalOverallLabel');
+        const globalSatisfactionError = document.getElementById('globalSatisfactionError'); // Errors for Global Trainer ratings
+        const globalTimingError = document.getElementById('globalTimingError');
+        const globalOverallError = document.getElementById('globalOverallError');
+ 
+ 
+        // Elements for confirmation message
+        const formContentDiv = document.getElementById('formContent');
+        const confirmationMessageDiv = document.getElementById('confirmationMessage');
+        const confirmationEmailDisplay = document.getElementById('confirmationEmailDisplay');
+        const submitAnotherResponseLink = document.getElementById('submitAnotherResponse');
+ 
+ 
+        // Helper function to display/hide errors
+        function displayError(element, messageDiv, message, isError) {
+            if (isError) {
+                // Add error class to the field/label
+                element.classList.add('error-field');
+                // Show error message
+                messageDiv.textContent = message;
+                messageDiv.classList.add('active');
+            } else {
+                // Remove error class from the field/label
+                element.classList.remove('error-field');
+                // Hide error message
+                messageDiv.textContent = '';
+                messageDiv.classList.remove('active');
+            }
+        }
+ 
+        // Helper function to validate radio groups
+        function validateRadioGroup(radios, labelElement, errorDiv, errorMessage) {
+            const isChecked = Array.from(radios).some(radio => radio.checked);
+            displayError(labelElement, errorDiv, errorMessage, !isChecked);
+            return isChecked;
+        }
+ 
+        // Helper function to validate checkbox groups (including 'Other' text area)
+        function validateCheckboxGroup(checkboxes, otherTextInput, labelElement, errorDiv, errorMessage) {
+            const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+            const otherText = otherTextInput ? otherTextInput.value.trim() : '';
+            const isValid = isChecked || otherText !== '';
+ 
+            // Apply error class to the label/header of the checkbox group
+            displayError(labelElement, errorDiv, errorMessage, !isValid);
+            // Apply error class to the 'Other' textarea if it's the only option and empty
+            if (otherTextInput) {
+                if (!isChecked && otherText === '' && !isValid) {
+                    otherTextInput.classList.add('error-field');
+                } else {
+                    otherTextInput.classList.remove('error-field');
+                }
+            }
+            return isValid;
+        }
+ 
+        // Display a general message (for success/failure of submission)
+        function showMessage(msg, type = 'info') {
+            messageDisplay.textContent = msg;
+            messageDisplay.className = `message ${type}`;
+            messageDisplay.classList.remove('hidden');
+            setTimeout(() => {
+                messageDisplay.classList.add('hidden');
+            }, 5000); // Hide after 5 seconds
+        }
+ 
+        // Show/hide main loading indicator
+        function toggleMainLoading(show) {
+            loadingIndicator.classList.toggle('hidden', !show);
+        }
+ 
+        // Show/hide save button loading spinner
+        function toggleSaveLoading(show) {
+            saveButton.disabled = show;
+            saveLoadingSpinner.classList.toggle('hidden', !show);
+        }
+ 
+        async function saveEntry() {
+            let isValidForm = true; // Flag to track overall form validity
+            let firstInvalidElement = null; // To store the first element needing scroll
+ 
+            const projectNameId = projectNameIdInput.value.trim();
+            const email = document.getElementById('capturedEmail').value; // Get captured email
+            const selectedTeams = Array.from(gupTeamCheckboxes)
+                                    .filter(checkbox => checkbox.checked)
+                                    .map(checkbox => checkbox.value);
+            
+            // 1. Validate Project Name / ID
+            if (projectNameId === '') {
+                displayError(projectNameIdInput, projectNameIdError, "Project Name / Project ID is required.", true);
+                if (!firstInvalidElement) firstInvalidElement = projectNameIdInput;
+                isValidForm = false;
+            } else {
+                displayError(projectNameIdInput, projectNameIdError, "", false);
+            }
+ 
+            // 2. Validate Email (captured email should not be empty)
+            if (email === '' || !/^[^@\s]+@[^\s@]+\.[^@\s]+$/.test(email)) {
+                // Email field is hidden, so apply error to display element and its error div
+                const emailDisplayElement = document.getElementById('displayEmail');
+                displayError(emailDisplayElement, emailError, "Your email could not be captured or is invalid.", true);
+                if (!firstInvalidElement) firstInvalidElement = emailDisplayElement;
+                isValidForm = false;
+            } else {
+                displayError(document.getElementById('displayEmail'), emailError, "", false);
+            }
+ 
+            // 3. Validate gUP Team Checkboxes
+            if (selectedTeams.length === 0) {
+                displayError(gupTeamLabel, gupTeamError, "Please select at least one gUP Team.", true);
+                if (!firstInvalidElement) firstInvalidElement = gupTeamLabel;
+                isValidForm = false;
+            } else {
+                displayError(gupTeamLabel, gupTeamError, "", false);
+            }
+            
+            // Initialize all possible rating/option values to empty strings/arrays
+            let idSatisfactionRating = '', idTimingRating = '', idOverallPerformanceRating = '';
+            let lmsSatisfactionRating = '', lmsTimingRating = '', lmsOverallPerformanceRating = '';
+            let globalSatisfactionRating = '', globalTimingRating = '', globalOverallPerformanceRating = '';
+            let selectedCourseDesignOptions = [];
+            let otherCourseDesignText = '';
+            let selectedLMSAdminOptions = [];
+            let otherLMSAdminText = '';
+            let selectedGlobalTrainerOptions = [];
+            let otherGlobalTrainerText = '';
+ 
+ 
+            // 4. Conditional Validation for Instructional Designer options and ratings
+            if (selectedTeams.includes("Instructional Designer")) {
+                if (!validateCheckboxGroup(courseDesignCheckboxes, otherCourseDesignInput, idOptionsLabel, idOptionsError, "Please choose at least one option or specify 'Other'.")) {
+                    if (!firstInvalidElement) firstInvalidElement = idOptionsLabel;
+                    isValidForm = false;
+                }
+                if (!validateRadioGroup(idSatisfactionRatingRadios, idQualityLabel, idSatisfactionError, "Please select a rating for Quality.")) { if (!firstInvalidElement) firstInvalidElement = idQualityLabel; isValidForm = false; }
+                if (!validateRadioGroup(idTimingRatingRadios, idTimingLabel, idTimingError, "Please select a rating for Timing.")) { if (!firstInvalidElement) firstInvalidElement = idTimingLabel; isValidForm = false; }
+                if (!validateRadioGroup(idOverallPerformanceRatingRadios, idOverallLabel, idOverallError, "Please select a rating for Overall Performance.")) { if (!firstInvalidElement) firstInvalidElement = idOverallLabel; isValidForm = false; }
+ 
+                // If valid, capture the values
+                selectedCourseDesignOptions = Array.from(courseDesignCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+                otherCourseDesignText = otherCourseDesignInput.value.trim();
+                idSatisfactionRating = document.querySelector('input[name="idSatisfactionRating"]:checked')?.value || '';
+                idTimingRating = document.querySelector('input[name="idTimingRating"]:checked')?.value || '';
+                idOverallPerformanceRating = document.querySelector('input[name="idOverallPerformanceRating"]:checked')?.value || '';
+            } else {
+                // Clear any potential errors if the section is not active
+                displayError(idOptionsLabel, idOptionsError, "", false);
+                displayError(idQualityLabel, idSatisfactionError, "", false);
+                displayError(idTimingLabel, idTimingError, "", false);
+                displayError(idOverallLabel, idOverallError, "", false);
+            }
+ 
+            // 5. Conditional Validation for LMS Admin options and ratings
+            if (selectedTeams.includes("LMS Admin")) {
+                if (!validateCheckboxGroup(lmsAdminCheckboxes, otherLMSAdminInput, lmsOptionsLabel, lmsOptionsError, "Please choose at least one option or specify 'Other'.")) {
+                    if (!firstInvalidElement) firstInvalidElement = lmsOptionsLabel;
+                    isValidForm = false;
+                }
+                if (!validateRadioGroup(lmsSatisfactionRatingRadios, lmsQualityLabel, lmsSatisfactionError, "Please select a rating for Quality.")) { if (!firstInvalidElement) firstInvalidElement = lmsQualityLabel; isValidForm = false; }
+                if (!validateRadioGroup(lmsTimingRatingRadios, lmsTimingLabel, lmsTimingError, "Please select a rating for Timing.")) { if (!firstInvalidElement) firstInvalidElement = lmsTimingLabel; isValidForm = false; }
+                if (!validateRadioGroup(lmsOverallPerformanceRatingRadios, lmsOverallLabel, lmsOverallError, "Please select a rating for Overall Performance.")) { if (!firstInvalidElement) firstInvalidElement = lmsOverallLabel; isValidForm = false; }
+ 
+                // If valid, capture the values
+                selectedLMSAdminOptions = Array.from(lmsAdminCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+                otherLMSAdminText = otherLMSAdminInput.value.trim();
+                lmsSatisfactionRating = document.querySelector('input[name="lmsSatisfactionRating"]:checked')?.value || '';
+                lmsTimingRating = document.querySelector('input[name="lmsTimingRating"]:checked')?.value || '';
+                lmsOverallPerformanceRating = document.querySelector('input[name="lmsOverallPerformanceRating"]:checked')?.value || '';
+            } else {
+                displayError(lmsOptionsLabel, lmsOptionsError, "", false);
+                displayError(lmsQualityLabel, lmsSatisfactionError, "", false);
+                displayError(lmsTimingLabel, lmsTimingError, "", false);
+                displayError(lmsOverallLabel, lmsOverallError, "", false);
+            }
+ 
+  // 6. Conditional Validation for Global Trainer options and ratings
+            if (selectedTeams.includes("Global Trainer")) {
+                if (!validateCheckboxGroup(globalTrainerCheckboxes, otherGlobalTrainerInput, globalOptionsLabel, globalOptionsError, "Please choose at least one option or specify 'Other'.")) {
+                    if (!firstInvalidElement) firstInvalidElement = globalOptionsLabel;
+                    isValidForm = false;
+                }
+                if (!validateRadioGroup(globalSatisfactionRatingRadios, globalQualityLabel, globalSatisfactionError, "Please select a rating for Quality.")) { if (!firstInvalidElement) firstInvalidElement = globalQualityLabel; isValidForm = false; }
+                if (!validateRadioGroup(globalTimingRatingRadios, globalTimingLabel, globalTimingError, "Please select a rating for Timing.")) { if (!firstInvalidElement) firstInvalidElement = globalTimingLabel; isValidForm = false; }
+                if (!validateRadioGroup(globalOverallPerformanceRatingRadios, globalOverallLabel, globalOverallError, "Please select a rating for Overall Performance.")) { if (!firstInvalidElement) firstInvalidElement = globalOverallLabel; isValidForm = false; }
+ 
+                // If valid, capture the values
+                selectedGlobalTrainerOptions = Array.from(globalTrainerCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+                otherGlobalTrainerText = otherGlobalTrainerInput.value.trim();
+                globalSatisfactionRating = document.querySelector('input[name="globalSatisfactionRating"]:checked')?.value || '';
+                globalTimingRating = document.querySelector('input[name="globalTimingRating"]:checked')?.value || '';
+                globalOverallPerformanceRating = document.querySelector('input[name="globalOverallPerformanceRating"]:checked')?.value || '';
+            } else {
+                displayError(globalOptionsLabel, globalOptionsError, "", false);
+                displayError(globalQualityLabel, globalSatisfactionError, "", false);
+                displayError(globalTimingLabel, globalTimingError, "", false);
+                displayError(globalOverallLabel, globalOverallError, "", false);
+            }
+ 
+ 
+            // If any validation failed, scroll to the first invalid element
+            if (!isValidForm && firstInvalidElement) {
+                firstInvalidElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                showMessage("Please correct the highlighted errors.", 'error');
+                return;
+            } else if (!isValidForm) { // Fallback if no specific element was captured (shouldn't happen with current logic)
+                showMessage("Please correct the highlighted errors.", 'error');
+                return;
+            }
+ 
+            toggleSaveLoading(true);
+ 
+            const formData = {
+                projectNameId: projectNameId,
+                email: email, // Use the captured email
+                teams: selectedTeams,
+                // Individual ratings for each team (will be empty if not selected/required)
+                idSatisfactionRating: idSatisfactionRating,
+                idTimingRating: idTimingRating,
+                idOverallPerformanceRating: idOverallPerformanceRating,
+                lmsSatisfactionRating: lmsSatisfactionRating,
+                lmsTimingRating: lmsTimingRating,
+                lmsOverallPerformanceRating: lmsOverallPerformanceRating,
+                globalSatisfactionRating: globalSatisfactionRating,
+                globalTimingRating: globalTimingRating,
+                globalOverallPerformanceRating: globalOverallPerformanceRating,
+                // Other conditional fields
+                courseDesignOptions: selectedCourseDesignOptions,
+                otherCourseDesign: otherCourseDesignText,
+                lmsAdminOptions: selectedLMSAdminOptions,
+                otherLMSAdmin: otherLMSAdminText,
+                globalTrainerOptions: selectedGlobalTrainerOptions,
+                otherGlobalTrainer: otherGlobalTrainerText
+            };
+ 
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    toggleSaveLoading(false);
+                    if (response.success) {
+                        formContentDiv.classList.add('hidden');
+                        confirmationEmailDisplay.textContent = email;
+                        confirmationMessageDiv.classList.remove('hidden');
+                    } else {
+                        showMessage(`Error: ${response.message}`, 'error');
+                    }
+                })
+                .withFailureHandler(function(error) {
+                    toggleSaveLoading(false);
+                    console.error("Error saving to Google Sheet:", error);
+                    showMessage(`Failed to save: ${error.message || 'Unknown error'}`, 'error');
+                })
+                .processFormData(formData);
+        }
+ 
+        // Function to reset the form and show it again
+        function resetForm() {
+            // Clear input fields
+            projectNameIdInput.value = '';
+            
+            // Clear checkboxes for gUP Teams
+            gupTeamCheckboxes.forEach(checkbox => checkbox.checked = false);
+            
+            // Clear all radio buttons for team-specific ratings
+            idSatisfactionRatingRadios.forEach(radio => radio.checked = false);
+            idTimingRatingRadios.forEach(radio => radio.checked = false);
+            idOverallPerformanceRatingRadios.forEach(radio => radio.checked = false);
+            lmsSatisfactionRatingRadios.forEach(radio => radio.checked = false);
+            lmsTimingRatingRadios.forEach(radio => radio.checked = false);
+            lmsOverallPerformanceRatingRadios.forEach(radio => radio.checked = false);
+            globalSatisfactionRatingRadios.forEach(radio => radio.checked = false);
+            globalTimingRatingRadios.forEach(radio => radio.checked = false);
+            globalOverallPerformanceRatingRadios.forEach(radio => radio.checked = false);
+            
+            // Clear conditional options and their 'Other' text areas
+            courseDesignCheckboxes.forEach(checkbox => checkbox.checked = false);
+            otherCourseDesignInput.value = '';
+            lmsAdminCheckboxes.forEach(checkbox => checkbox.checked = false);
+            otherLMSAdminInput.value = '';
+            globalTrainerCheckboxes.forEach(checkbox => checkbox.checked = false);
+            otherGlobalTrainerInput.value = '';
+ 
+            // Hide all conditional sections (options and ratings)
+            instructionalDesignerOptionsDiv.classList.add('hidden');
+            instructionalDesignerOptionsDiv.style.maxHeight = 0;
+            instructionalDesignerOptionsDiv.style.opacity = 0;
+            instructionalDesignerOptionsDiv.style.visibility = 'hidden';
+ 
+            lmsAdminOptionsDiv.classList.add('hidden');
+            lmsAdminOptionsDiv.style.maxHeight = 0;
+            lmsAdminOptionsDiv.style.opacity = 0;
+            lmsAdminOptionsDiv.style.visibility = 'hidden';
+ 
+            globalTrainerOptionsDiv.classList.add('hidden');
+            globalTrainerOptionsDiv.style.maxHeight = 0;
+            globalTrainerOptionsDiv.style.opacity = 0;
+            globalTrainerOptionsDiv.style.visibility = 'hidden';
+ 
+            // Reset error displays for all fields
+            displayError(projectNameIdInput, projectNameIdError, "", false);
+            // Assuming emailError is directly below displayEmail p tag
+            displayError(document.getElementById('displayEmail'), emailError, "", false);
+            displayError(gupTeamLabel, gupTeamError, "", false);
+ 
+            displayError(idOptionsLabel, idOptionsError, "", false);
+            displayError(idQualityLabel, idSatisfactionError, "", false);
+            displayError(idTimingLabel, idTimingError, "", false);
+            displayError(idOverallLabel, idOverallError, "", false);
+ 
+            displayError(lmsOptionsLabel, lmsOptionsError, "", false);
+            displayError(lmsQualityLabel, lmsSatisfactionError, "", false);
+            displayError(lmsTimingLabel, lmsTimingError, "", false);
+            displayError(lmsOverallLabel, lmsOverallError, "", false);
+ 
+            displayError(globalOptionsLabel, globalOptionsError, "", false);
+            displayError(globalQualityLabel, globalSatisfactionError, "", false);
+            displayError(globalTimingLabel, globalTimingError, "", false);
+            displayError(globalOverallLabel, globalOverallError, "", false);
+ 
+ 
+            updateConditionalSections(); // Re-evaluate visibility after clearing
+            messageDisplay.classList.add('hidden'); // Hide any previous general messages
+ 
+            // Show the form and hide the confirmation message
+            formContentDiv.classList.remove('hidden');
+            confirmationMessageDiv.classList.add('hidden');
+        }
+ 
+        // Function to update visibility of conditional sections
+        function updateConditionalSections() {
+            const selectedTeams = Array.from(gupTeamCheckboxes)
+                                    .filter(checkbox => checkbox.checked)
+                                    .map(checkbox => checkbox.value);
+            
+            // Helper function for toggling visibility
+            const toggleSectionVisibility = (sectionDiv, isVisible, checkboxes, otherInput) => {
+                if (isVisible) {
+                    sectionDiv.classList.remove('hidden');
+                } else {
+                    sectionDiv.classList.add('hidden');
+                    checkboxes.forEach(checkbox => checkbox.checked = false);
+                    if (otherInput) otherInput.value = '';
+                }
+            };
+
+            const toggleRatingSectionVisibility = (sectionDiv, isVisible, radiosArray) => {
+                if (isVisible) {
+                    sectionDiv.classList.remove('hidden');
+                } else {
+                    sectionDiv.classList.add('hidden');
+                    radiosArray.forEach(radioGroup => {
+                        radioGroup.forEach(radio => radio.checked = false);
+                    });
+                }
+            };
+ 
+ 
+            // --- Toggle Instructional Designer options and ratings ---
+            const showID = selectedTeams.includes("Instructional Designer");
+            toggleSectionVisibility(instructionalDesignerOptionsDiv, showID, courseDesignCheckboxes, otherCourseDesignInput);
+            toggleRatingSectionVisibility(idRatingsSection, showID, [idSatisfactionRatingRadios, idTimingRatingRadios, idOverallPerformanceRatingRadios]);
+ 
+ 
+            // --- Toggle LMS Admin options and ratings ---
+            const showLMS = selectedTeams.includes("LMS Admin");
+            toggleSectionVisibility(lmsAdminOptionsDiv, showLMS, lmsAdminCheckboxes, otherLMSAdminInput);
+            toggleRatingSectionVisibility(lmsAdminRatingsSection, showLMS, [lmsSatisfactionRatingRadios, lmsTimingRatingRadios, lmsOverallPerformanceRatingRadios]);
+ 
+ 
+            // --- Toggle Global Trainer options and complexities ---
+            const showGlobalTrainer = selectedTeams.includes("Global Trainer");
+            toggleSectionVisibility(globalTrainerOptionsDiv, showGlobalTrainer, globalTrainerCheckboxes, otherGlobalTrainerInput);
+            toggleRatingSectionVisibility(globalTrainerRatingsSection, showGlobalTrainer, [globalSatisfactionRatingRadios, globalTimingRatingRadios, globalOverallPerformanceRatingRadios]);
+ 
+            // Clear errors on change if the section is now hidden
+            if (!showID) {
+                displayError(idOptionsLabel, idOptionsError, "", false);
+                displayError(idQualityLabel, idSatisfactionError, "", false);
+                displayError(idTimingLabel, idTimingError, "", false);
+                displayError(idOverallLabel, idOverallError, "", false);
+            }
+            if (!showLMS) {
+                displayError(lmsOptionsLabel, lmsOptionsError, "", false);
+                displayError(lmsQualityLabel, lmsSatisfactionError, "", false);
+                displayError(lmsTimingLabel, lmsTimingError, "", false);
+                displayError(lmsOverallLabel, lmsOverallError, "", false);
+            }
+            if (!showGlobalTrainer) {
+                displayError(globalOptionsLabel, globalOptionsError, "", false);
+                displayError(globalQualityLabel, globalSatisfactionError, "", false);
+                displayError(globalTimingLabel, globalTimingError, "", false);
+                displayError(globalOverallLabel, globalOverallError, "", false);
+            }
+        }
+ 
+        // Add event listeners for instant validation feedback
+        projectNameIdInput.addEventListener('blur', () => displayError(projectNameIdInput, projectNameIdError, "Project Name / Project ID is required.", projectNameIdInput.value.trim() === ''));
+        gupTeamCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const selectedTeams = Array.from(gupTeamCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+                displayError(gupTeamLabel, gupTeamError, "Please select at least one gUP Team.", selectedTeams.length === 0);
+                updateConditionalSections(); // Also update conditional sections
+            });
+        });
+ 
+        // Add blur/change listeners for conditional fields/ratings
+        // Instructional Designer
+        courseDesignCheckboxes.forEach(cb => cb.addEventListener('change', () => validateCheckboxGroup(courseDesignCheckboxes, otherCourseDesignInput, idOptionsLabel, idOptionsError, "Please choose at least one option or specify 'Other'.")));
+        otherCourseDesignInput.addEventListener('blur', () => validateCheckboxGroup(courseDesignCheckboxes, otherCourseDesignInput, idOptionsLabel, idOptionsError, "Please choose at least one option or specify 'Other'."));
+        idSatisfactionRatingRadios.forEach(radio => radio.addEventListener('change', () => validateRadioGroup(idSatisfactionRatingRadios, idQualityLabel, idSatisfactionError, "Please select a rating for Quality.")));
+        idTimingRatingRadios.forEach(radio => radio.addEventListener('change', () => validateRadioGroup(idTimingRatingRadios, idTimingLabel, idTimingError, "Please select a rating for Timing.")));
+        idOverallPerformanceRatingRadios.forEach(radio => radio.addEventListener('change', () => validateRadioGroup(idOverallPerformanceRatingRadios, idOverallLabel, idOverallError, "Please select a rating for Overall Performance.")));
+ 
+        // LMS Admin
+        lmsAdminCheckboxes.forEach(cb => cb.addEventListener('change', () => validateCheckboxGroup(lmsAdminCheckboxes, otherLMSAdminInput, lmsOptionsLabel, lmsOptionsError, "Please choose at least one option or specify 'Other'.")));
+        otherLMSAdminInput.addEventListener('blur', () => validateCheckboxGroup(lmsAdminCheckboxes, otherLMSAdminInput, lmsOptionsLabel, lmsOptionsError, "Please choose at least one option or specify 'Other'."));
+        lmsSatisfactionRatingRadios.forEach(radio => radio.addEventListener('change', () => validateRadioGroup(lmsSatisfactionRatingRadios, lmsQualityLabel, lmsSatisfactionError, "Please select a rating for Quality.")));
+        lmsTimingRatingRadios.forEach(radio => radio.addEventListener('change', () => validateRadioGroup(lmsTimingRatingRadios, lmsTimingLabel, lmsTimingError, "Please select a rating for Timing.")));
+        lmsOverallPerformanceRatingRadios.forEach(radio => radio.addEventListener('change', () => validateRadioGroup(lmsOverallPerformanceRatingRadios, lmsOverallLabel, lmsOverallError, "Please select a rating for Overall Performance.")));
+ 
+        // Global Trainer
+        globalTrainerCheckboxes.forEach(cb => cb.addEventListener('change', () => validateCheckboxGroup(globalTrainerCheckboxes, otherGlobalTrainerInput, globalOptionsLabel, globalOptionsError, "Please choose at least one option or specify 'Other'.")));
+        otherGlobalTrainerInput.addEventListener('blur', () => validateCheckboxGroup(globalTrainerCheckboxes, otherGlobalTrainerInput, globalOptionsLabel, globalOptionsError, "Please choose at least one option or specify 'Other'."));
+        globalSatisfactionRatingRadios.forEach(radio => radio.addEventListener('change', () => validateRadioGroup(globalSatisfactionRatingRadios, globalQualityLabel, globalSatisfactionError, "Please select a rating for Quality.")));
+        globalTimingRatingRadios.forEach(radio => radio.addEventListener('change', () => validateRadioGroup(globalTimingRatingRadios, globalTimingLabel, globalTimingError, "Please select a rating for Timing.")));
+        globalOverallPerformanceRatingRadios.forEach(radio => radio.addEventListener('change', () => validateRadioGroup(globalOverallPerformanceRatingRadios, globalOverallLabel, globalOverallError, "Please select a rating for Overall Performance.")));
+ 
+ 
+        // Event Listener for the main Submit button
+        saveButton.addEventListener('click', saveEntry);
+ 
+        // Event listener for "Submit another response" link
+        submitAnotherResponseLink.addEventListener('click', resetForm);
+ 
+        // Initial setup on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+             toggleMainLoading(false);
+             updateConditionalSections(); // Call once on load to set initial state
+        });
+    </script>
+</body>
+</html>
+
+
